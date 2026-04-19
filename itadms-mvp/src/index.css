@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-green-military: #00FF41;
+  --color-amber-military: #FFA500;
+}
+
+body {
+  background-color: #050505;
+  color: #00FF41;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.crt-scanline {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.typewriter-cursor::after {
+  content: '█';
+  animation: blink 1s step-start infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #111; border-left: 1px solid #00FF41; }
+::-webkit-scrollbar-thumb { background: #00FF41; }
