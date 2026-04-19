@@ -19,9 +19,11 @@ export default function App() {
       { t: 2000, msg: "SENSOR SUITE ONLINE", type: "INFO" },
       { t: 3000, msg: "CONVOY LINK ESTABLISHED", type: "INFO" }
     ];
-    boot.forEach(({t, msg, type}) => {
-      setTimeout(() => addAlert(type, msg), t);
-    });
+    const timers = boot.map(({t, msg, type}) => setTimeout(() => addAlert(type, msg), t));
+
+    return () => {
+      timers.forEach((timerId) => clearTimeout(timerId));
+    };
   }, [addAlert]);
 
   const handleSensorAlert = useCallback((level) => {
@@ -50,8 +52,8 @@ export default function App() {
     <div className="min-h-screen bg-[#050505] p-4 flex flex-col font-mono text-[var(--color-green-military)] overflow-y-auto">
       <div className="crt-scanline"></div>
       
-      <header className="border-2 border-[var(--color-green-military)] bg-[#111] px-4 py-3 mb-4 flex justify-between items-center shadow-[0_0_10px_#00FF41] shrink-0 relative z-10">
-        <h1 className="text-xl font-bold uppercase tracking-widest text-[var(--color-green-military)]">
+      <header className="border-2 border-[var(--color-green-military)] bg-[#111] px-4 py-3 mb-4 flex justify-between items-center shadow-[0_0_10px_#00FF41] shrink-0 relative z-10 overflow-x-auto">
+        <h1 className="text-[clamp(0.72rem,0.95vw,1.1rem)] font-bold uppercase tracking-wider text-[var(--color-green-military)] whitespace-nowrap min-w-max">
           ITADMS v1.0 | VEHICLE: BRAVO-7 | CONVOY: ALPHA | STATUS: <span className="text-[var(--color-green-military)] animate-pulse">● ACTIVE</span>
         </h1>
       </header>

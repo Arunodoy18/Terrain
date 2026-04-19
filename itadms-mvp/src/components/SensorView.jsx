@@ -3,7 +3,6 @@ import { useRef, useEffect, useState } from 'react';
 export default function SensorView({ onAlertChange }) {
   const canvasRef = useRef(null);
   const [alertLevel, setAlertLevel] = useState('SAFE');
-  const [speed, setSpeed] = useState(60);
   const [gorgeWarning, setGorgeWarning] = useState(false);
 
   const lastAlertLevel = useRef('SAFE');
@@ -21,15 +20,7 @@ export default function SensorView({ onAlertChange }) {
     }
   }, [alertLevel, onAlertChange]);
 
-  // Speed transition animation
-  useEffect(() => {
-    let target = alertLevel === 'DANGER' ? 20 : 60;
-    if (speed === target) return;
-    const timer = setTimeout(() => {
-      setSpeed(p => p < target ? p + 1 : p - 1);
-    }, 30);
-    return () => clearTimeout(timer);
-  }, [speed, alertLevel]);
+  const speed = alertLevel === 'DANGER' ? 20 : 60;
 
   // Request Animation Frame Canvas Loop
   useEffect(() => {
@@ -91,7 +82,7 @@ export default function SensorView({ onAlertChange }) {
 
       // Spawn obstacle periodically (Every 4 seconds = 4000ms)
       if (elapsed - lastObstacleSpawn > 4000) {
-        obstacles.push({ x: cx + (Math.random()*80 - 40), y: -20 });
+        obstacles.push({ x: cx + (Math.random()*80 - 40), y: -20, vx: 0 });
         lastObstacleSpawn = elapsed;
       }
 
@@ -100,6 +91,9 @@ export default function SensorView({ onAlertChange }) {
       // Update & Draw Obstacles
       for (let i = obstacles.length - 1; i >= 0; i--) {
         let obs = obstacles[i];
+        const deltaX = vX - obs.x;
+        obs.vx = deltaX * 0.02;
+        obs.x += obs.vx;
         obs.y += 1.5; // Approach speed
         
         const dist = Math.hypot(obs.x - vX, Math.abs(obs.y - cy));

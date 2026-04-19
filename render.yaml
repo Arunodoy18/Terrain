@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: itadms-mvp
+    env: static
+    rootDir: itadms-mvp
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
