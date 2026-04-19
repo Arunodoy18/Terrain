@@ -40,11 +40,11 @@ export default function App() {
 
   const handleRouteZoneChange = useCallback((zone) => {
     if (zone === 'AMBER') {
-      addAlert('WARNING', 'ROUTE RISK MAP: VEHICLE ENTERED CAUTION FOG ZONE KM 8-12.');
+      addAlert('WARNING', 'ROUTE RISK MAP: VEHICLE ENTERED ZONE BRAVO FOG RISK KM 85-340.');
       return;
     }
     if (zone === 'RED') {
-      addAlert('DANGER', 'ROUTE RISK MAP: VEHICLE ENTERED HIGH RISK ATGM CORRIDOR KM 14-18.');
+      addAlert('DANGER', 'ROUTE RISK MAP: VEHICLE ENTERED ZONE CHARLIE HIGH RISK ATGM CORRIDOR KM 340-520.');
     }
   }, [addAlert]);
 
@@ -70,7 +70,7 @@ export default function App() {
         </div>
       </div>
 
-      <div className="mt-4 h-[240px] lg:h-[24vh] relative z-10 shrink-0">
+      <div className="mt-4 h-[220px] relative z-10 shrink-0">
         <RouteRiskMap onZoneChange={handleRouteZoneChange} />
       </div>
 
